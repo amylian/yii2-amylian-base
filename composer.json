@@ -8,4 +8,5 @@
     "psr-4": {
       "abexto\\amylian\\yii\\base\\": "src/"
     }    
+  }
 }
