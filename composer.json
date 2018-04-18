@@ -1,5 +1,8 @@
 {
     "name": "amylian/yii2-amylian-base",
     "type": "yii2-extension",
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "require": {
+        "yiisoft/yii2": "2.*"
+    }
 }
