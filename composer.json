@@ -1,0 +1,5 @@
+{
+    "name": "amylian/yii2-amylian-base",
+    "type": "yii2-extension",
+    "minimum-stability": "dev"
+}
