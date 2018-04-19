@@ -10,6 +10,8 @@ namespace abexto\amylian\yii2\base\common;
  * Description of AbstractInstanceWrapperComponent
  *
  * @author Andreas Prucha, Abexto - Helicon Software Development
+ * 
+ * @property object $inst Wrapped Object Instance
  */
 Abstract class AbstractInstanceWrapperComponent extends yii\base\Component
 {
