@@ -4,7 +4,7 @@
  * Copyright 2018 Andreas Prucha, Abexto - Helicon Software Development.
  */
 
-namespace abexto\amylian\yii2\base\common;
+namespace abexto\amylian\yii\base\common;
 
 /**
  * Description of AbstractInstanceWrapperComponent
@@ -13,10 +13,9 @@ namespace abexto\amylian\yii2\base\common;
  * 
  * @property object $inst Wrapped Object Instance
  */
-Abstract class AbstractInstanceWrapperComponent extends yii\base\Component
+Abstract class AbstractInstanceWrapperComponent extends \yii\base\Component
 {
     /**
-     *
      * @var string Class of the instance to wrap
      */
     public $instClass = null;
@@ -38,7 +37,7 @@ Abstract class AbstractInstanceWrapperComponent extends yii\base\Component
      */
     protected function createNewInst()
     {
-        $classReflection = new ReflectionClass($this->instClass);
+        $classReflection = new \ReflectionClass($this->instClass);
         if ($this->constructorArgs === null) {
             return $classReflection->newInstance();
         } else {
@@ -52,8 +51,8 @@ Abstract class AbstractInstanceWrapperComponent extends yii\base\Component
     public function getInst()
     {
       if (!isset($this->_inst)) {
-          $this->inst = $this->createNewInst();
+          $this->_inst = $this->createNewInst();
       }
-      return $this->inst;
+      return $this->_inst;
     }
 }
