@@ -43,7 +43,7 @@ class InstanceWrapperComponentTest extends \abexto\amylian\yii\phpunit\AbstractY
 {
     public function testAccessInst()
     {
-        static::mockYiiApplication(['components' => ['wrappedFoo' => [
+        static::mockYiiWebApplication(['components' => ['wrappedFoo' => [
             'class' => \abexto\amylian\yii\base\tests\app\classes\TestInstanceWrapperComponent::class,
             'instClass' => \abexto\amylian\yii\base\tests\app\classes\WrappedTestInst::class
         ]]]);
