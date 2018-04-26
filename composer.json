@@ -8,5 +8,10 @@
     "psr-4": {
       "abexto\\amylian\\yii\\base\\": "src/"
     }    
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "abexto\\amylian\\yii\\base\\tests": "tests/"
+    }    
   }
 }

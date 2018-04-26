@@ -35,55 +35,17 @@
 namespace abexto\amylian\yii\base\common;
 
 /**
- * Abstract component for encapsulation of Non-Yii classes
+ * Instance Wrapper Interface
  *
  * @author Andreas Prucha, Abexto - Helicon Software Development
- * 
- * @property object $inst Wrapped Object Instance ({@see getInst()})
  */
-Abstract class AbstractInstanceWrapperComponent extends \yii\base\Component
+interface InstanceWrappeComponentInterface extends \yii\base\Configurable
 {
-    /**
-     * @var string Class of the instance to wrap
-     */
-    public $instClass = null;
-    
-    /**
-     *
-     * @var array|null Parameters to be passed to constructor 
-     */
-    public $constructorArgs = null;
-
-    /**
-     * @var object|null Wrapped object instance
-     */
-    protected $_inst = null;
-    
-    /**
-     * Creates the wrapped instance
-     * @return object
-     */
-    protected function createNewInst()
-    {
-        $classReflection = new \ReflectionClass($this->instClass);
-        if ($this->constructorArgs === null) {
-            return $classReflection->newInstance();
-        } else {
-            return $classReflection->newInstanceArgs($this->concstructorArgs);
-        }
-    }
-    
-    /**
+     /**
      * Returns the wrapped object instance
      * 
      * @return object Wrapped object
      * 
      */
-    public function getInst()
-    {
-      if (!isset($this->_inst)) {
-          $this->_inst = $this->createNewInst();
-      }
-      return $this->_inst;
-    }
+    public function getInst();
 }

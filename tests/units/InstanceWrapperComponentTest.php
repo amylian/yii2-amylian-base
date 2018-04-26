@@ -32,58 +32,22 @@
  * 
  */
 
-namespace abexto\amylian\yii\base\common;
+namespace abexto\amylian\yii\base\tests\units;
 
 /**
- * Abstract component for encapsulation of Non-Yii classes
+ * Description of newPHPClass
  *
  * @author Andreas Prucha, Abexto - Helicon Software Development
- * 
- * @property object $inst Wrapped Object Instance ({@see getInst()})
  */
-Abstract class AbstractInstanceWrapperComponent extends \yii\base\Component
+class InstanceWrapperComponentTest extends \abexto\amylian\yii\phpunit\AbstractYiiTestCase
 {
-    /**
-     * @var string Class of the instance to wrap
-     */
-    public $instClass = null;
-    
-    /**
-     *
-     * @var array|null Parameters to be passed to constructor 
-     */
-    public $constructorArgs = null;
-
-    /**
-     * @var object|null Wrapped object instance
-     */
-    protected $_inst = null;
-    
-    /**
-     * Creates the wrapped instance
-     * @return object
-     */
-    protected function createNewInst()
+    public function testAccessInst()
     {
-        $classReflection = new \ReflectionClass($this->instClass);
-        if ($this->constructorArgs === null) {
-            return $classReflection->newInstance();
-        } else {
-            return $classReflection->newInstanceArgs($this->concstructorArgs);
-        }
-    }
-    
-    /**
-     * Returns the wrapped object instance
-     * 
-     * @return object Wrapped object
-     * 
-     */
-    public function getInst()
-    {
-      if (!isset($this->_inst)) {
-          $this->_inst = $this->createNewInst();
-      }
-      return $this->_inst;
+        static::mockYiiApplication(['components' => ['wrappedFoo' => [
+            'class' => \abexto\amylian\yii\base\tests\app\classes\TestInstanceWrapperComponent::class,
+            'instClass' => \abexto\amylian\yii\base\tests\app\classes\WrappedTestInst::class
+        ]]]);
+        $this->assertInstanceOf(\abexto\amylian\yii\base\tests\app\classes\TestInstanceWrapperComponent::class, \Yii::$app->wrappedFoo);
+        $this->assertInstanceOf(\abexto\amylian\yii\base\tests\app\classes\WrappedTestInst::class, \Yii::$app->wrappedFoo->inst);
     }
 }

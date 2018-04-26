@@ -1,0 +1,27 @@
+<phpunit
+  colors="true"
+  verbose="true"
+  failOnRisky="true"
+  beStrictAboutChangesToGlobalState="true"
+  beStrictAboutOutputDuringTests="true"
+  beStrictAboutTestsThatDoNotTestAnything="true"
+  bootstrap="./bootstrap.php"
+>
+
+
+  <testsuites>
+    <testsuite name="Abexto Amylian Base Test Suite">
+      <directory>../units</directory>
+    </testsuite>
+  </testsuites>
+
+  <php>
+    <!-- Database for temporary connections (i.e. to drop/create the main database) -->
+    <env name="db_type" value="mysql"/>
+    <env name="db_host" value="localhost" />
+    <env name="db_username" value="abexto_amylian_tests" />
+    <env name="db_password" value="abexto_amylian_tests" />
+    <env name="db_name" value="abexto_amylian_tests" />
+  </php>
+
+</phpunit>
