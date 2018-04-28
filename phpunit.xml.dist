@@ -13,6 +13,7 @@
     <testsuite name="Abexto Amylian Base Test Suite">
       <directory>./tests/units</directory>
     </testsuite>
+  </testsuites>
 
 
 </phpunit>
