@@ -18,6 +18,9 @@
   "require": {
     "yiisoft/yii2": "2.*"
   },
+  "require-dev": {
+    "amylian/yii2-amylian-phpunit": "*"
+  },
   "suggest": {
     "php": ">=7.0"
   },
@@ -28,7 +31,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "abexto\\amylian\\yii\\base\\tests": "tests/"
+      "abexto\\amylian\\yii\\base\\tests\\": "tests/"
     }    
   }
 }
