@@ -9,6 +9,12 @@
       "role": "Developer"
     }    
   ],
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
+    }
+  ],
   "require": {
     "yiisoft/yii2": "2.*"
   },
