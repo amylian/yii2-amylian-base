@@ -41,6 +41,9 @@ namespace abexto\amylian\yii\base\tests\app\classes;
  */
 class WrappedTestInst
 {
+    
+    public $testAfterNewInstEventValue = null;
+    
     public function getFoo()
     {
         return 'foo';
