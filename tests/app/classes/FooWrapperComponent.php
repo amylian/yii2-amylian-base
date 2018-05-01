@@ -49,10 +49,16 @@ class FooWrapperComponent extends \abexto\amylian\yii\base\common\AbstractInstan
     public $value3 = 3;
     public $value4 = 4;
     public $value5 = 5;
-
+    
+    public $addInstProperties = [
+        'value6' => 6,
+        'value7' => 7,
+        'value8' => 8
+    ];
+    
     protected function getInstPropertyMappings()
     {
-        array_merge(parent::getInstPropertyMappings(),
+        return array_merge(parent::getInstPropertyMappings(),
                      [
             'value1' => true,
             'value2' => true,
@@ -70,6 +76,11 @@ class FooWrapperComponent extends \abexto\amylian\yii\base\common\AbstractInstan
     protected function customComponentSetValue5($value, BarClass $inst)
     {
         $inst->customInstSetValue5($value);
+    }
+    
+    protected function setInstPropertyValue8($value, BarClass $inst)
+    {
+        $inst->customInstSetValue8($value);
     }
 
 }

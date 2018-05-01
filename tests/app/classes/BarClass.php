@@ -47,27 +47,40 @@ class BarClass
     private $_value3 = null;
     private $_value4 = null;
     private $_value5 = null;
+    public $value6   = null;
+    private $_value7 = null;
+    private $_value8 = null;
 
     public function setValue2($value)
     {
-        $this->value2 = $value;
+        $this->_value2 = $value;
     }
-    
+
     public function customInstSetValue3($value)
     {
         $this->_value3 = $value;
     }
-    
+
     public function customInstSetValue4($value)
     {
         $this->_value4 = $value;
     }
-    
+
     public function customInstSetValue5($value)
     {
         $this->_value5 = $value;
     }
-    
+
+    public function setValue7($value)
+    {
+        $this->_value7 = $value;
+    }
+
+    public function customInstSetValue8($value)
+    {
+        $this->_value8 = $value;
+    }
+
     function getValue1()
     {
         return $this->value1;
@@ -93,5 +106,19 @@ class BarClass
         return $this->_value5;
     }
 
+    function getValue6()
+    {
+        return $this->value6;
+    }
+
+    function getValue7()
+    {
+        return $this->_value7;
+    }
+
+    function getValue8()
+    {
+        return $this->_value7;
+    }
 
 }
