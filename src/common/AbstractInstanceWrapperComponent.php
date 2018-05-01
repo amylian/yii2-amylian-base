@@ -114,7 +114,7 @@ Abstract class AbstractInstanceWrapperComponent extends \yii\base\Component
         return[];
     }
 
-    protected function setInstProperty($inst, $propertyName, $mappingDefinition, $propertyValue)
+    protected function setInstProperty($inst, $propertyName, $mappingDefinition, $propertyValue = null)
     {
         if ($mappingDefinition === false) {
             return false; // Do not even attempt to set this property
@@ -157,7 +157,7 @@ Abstract class AbstractInstanceWrapperComponent extends \yii\base\Component
     /**
      * @param object $inst
      */
-    protected function setInstProperites($inst, $mappings)
+    protected function setInstProperites($inst, array $mappings)
     {
         foreach ($mappings as $cpn => $mapping) {
             $this->setInstProperty($inst, $cpn, $mapping, $this->$cpn);
