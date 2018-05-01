@@ -35,70 +35,20 @@
 namespace abexto\amylian\yii\base\common;
 
 /**
- * Abstract component for encapsulation of Non-Yii classes
+ * Event triggered {@link AbstractInstanceWrapperComponent}
  *
  * @author Andreas Prucha, Abexto - Helicon Software Development
- * 
- * @property object $inst Wrapped Object Instance ({@see getInst()})
  */
-Abstract class AbstractInstanceWrapperComponent extends \yii\base\Component
+class InstanceWrapperComponentEvent extends \yii\base\Event
 {
-
-    const EVENT_AFTER_NEW_INST = 'afterNewInst';
-
     /**
-     * @var string Class of the instance to wrap
+     * @var InstanceWrapperComponentInterface The {@link InstanceWrappeComponentInterface} triggering this event
      */
-    public $instClass = null;
-
+    public $sender;
+    
     /**
-     *
-     * @var array|null Parameters to be passed to constructor 
+     * @var object The wrapped object instance if available
      */
-    public $constructorArgs = null;
-
-    /**
-     * @var object|null Wrapped object instance
-     */
-    protected $_inst = null;
-
-    /**
-     * Creates the wrapped instance
-     * @return object
-     */
-    protected function createNewInst()
-    {
-        $classReflection = new \ReflectionClass($this->instClass);
-        if ($this->constructorArgs === null) {
-            return $classReflection->newInstance();
-        } else {
-            return $classReflection->newInstanceArgs($this->concstructorArgs);
-        }
-    }
-
-    protected function afterNewInst()
-    {
-        $this->trigger(static::EVENT_AFTER_NEW_INST, new InstanceWrapperComponentEvent(['inst' => $this->_inst]));
-    }
-
-    protected function doCreateNewInst()
-    {
-        $this->_inst = $this->createNewInst();
-        $this->afterNewInst();
-    }
-
-    /**
-     * Returns the wrapped object instance
-     * 
-     * @return object Wrapped object
-     * 
-     */
-    public function getInst()
-    {
-        if (!isset($this->_inst)) {
-            $this->doCreateNewInst();
-        }
-        return $this->_inst;
-    }
-
+    public $inst = null;
+    
 }
