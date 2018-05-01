@@ -44,25 +44,38 @@ class InstanceWrapperComponentTest extends \abexto\amylian\yii\phpunit\AbstractY
 
     public function testAccessInst()
     {
-        static::mockYiiWebApplication(['components' => ['wrappedFoo' => [
-                    'class'     => \abexto\amylian\yii\base\tests\app\classes\TestInstanceWrapperComponent::class,
-                    'instClass' => \abexto\amylian\yii\base\tests\app\classes\WrappedTestInst::class
+        static::mockYiiWebApplication(['components' => ['foo' => [
+                    'class'     => \abexto\amylian\yii\base\tests\app\classes\FooWrapperComponent::class,
+                    'instClass' => \abexto\amylian\yii\base\tests\app\classes\BarClass::class
         ]]]);
-        $this->assertInstanceOf(\abexto\amylian\yii\base\tests\app\classes\TestInstanceWrapperComponent::class,
-                                \Yii::$app->wrappedFoo);
-        $this->assertInstanceOf(\abexto\amylian\yii\base\tests\app\classes\WrappedTestInst::class, \Yii::$app->wrappedFoo->inst);
+        $this->assertInstanceOf(\abexto\amylian\yii\base\tests\app\classes\FooWrapperComponent::class,
+                                \Yii::$app->foo);
+        $this->assertInstanceOf(\abexto\amylian\yii\base\tests\app\classes\BarClass::class, \Yii::$app->foo->inst);
     }
 
     public function testAfterNewInstEvent()
     {
-        static::mockYiiWebApplication(['components' => ['wrappedFoo' => [
-                    'class'           => \abexto\amylian\yii\base\tests\app\classes\TestInstanceWrapperComponent::class,
-                    'instClass'       => \abexto\amylian\yii\base\tests\app\classes\WrappedTestInst::class,
+        static::mockYiiWebApplication(['components' => ['foo' => [
+                    'class'           => \abexto\amylian\yii\base\tests\app\classes\FooWrapperComponent::class,
+                    'instClass'       => \abexto\amylian\yii\base\tests\app\classes\BarClass::class,
                     'on afterNewInst' => function(\abexto\amylian\yii\base\common\InstanceWrapperComponentEvent $event) {
                             $event->inst->testAfterNewInstEventValue = 'success';
                         },
         ]]]);
-        $this->assertSame('success', \Yii::$app->wrappedFoo->inst->testAfterNewInstEventValue);
+        $this->assertSame('success', \Yii::$app->foo->inst->testAfterNewInstEventValue);
+    }
+    
+    public function testInstPropertyMappings()
+    {
+        static::mockYiiWebApplication(['components' => ['foo' => [
+                    'class'     => \abexto\amylian\yii\base\tests\app\classes\FooWrapperComponent::class,
+                    'instClass' => \abexto\amylian\yii\base\tests\app\classes\BarClass::class
+        ]]]);
+        $this->assertSame(1, \Yii::$app->foo->inst->getValue1());
+        $this->assertSame(2, \Yii::$app->foo->inst->getValue2());
+        $this->assertSame(3, \Yii::$app->foo->inst->getValue3());
+        $this->assertSame(4, \Yii::$app->foo->inst->getValue4());
+        $this->assertSame(5, \Yii::$app->foo->inst->getValue5());
     }
 
 }

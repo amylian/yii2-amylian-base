@@ -52,15 +52,120 @@ Abstract class AbstractInstanceWrapperComponent extends \yii\base\Component
     public $instClass = null;
 
     /**
-     *
+     *  Array of arguments to be passed to the constructor
+     * 
      * @var array|null Parameters to be passed to constructor 
      */
     public $constructorArgs = null;
 
     /**
+     * Additional properties to be set in the wrapped instance
+     * @var array Array of propertName => value pairs. 
+     */
+    public $addInstProperties = [];
+
+    /**
      * @var object|null Wrapped object instance
      */
     protected $_inst = null;
+
+    /**
+     *  Array of additional properties to set in the wrapped instance
+     * 
+     * @var array Array of propertyName => Value pairs
+     */
+
+    /**
+     * Returns an array of component => inst property mappings for automatic configuration of the wraped instance
+     * 
+     * The keys are the property names used in this component
+     * 
+     * The values may be:
+     * <dl>
+     *  <dt>
+     *    true 
+     *  </dt>
+     *  <dd>
+     *    if the value is true, the {@link setInstProperties()} tries to figure out the best way to use set the value.
+     *    If {@link $inst} defines a public property with the same name, it's set.
+     *    If {@link $inst} defines a public method with the name setXxxx (where Xxxx is the name of the proprety), it's called.
+     *    NOTE: Just the value is passed to the method.
+     *    If this has a method named setInstXxxxProperty (where Xxxx is the name of the proprety) this method
+     *    is called. The value and the instance of the wrapped object is passed to this method. 
+     *  </dd>
+     *  <dt>
+     *     Callable:
+     *  </dt>
+     *     if the first element of the callable array is null 
+     *  <dd>
+     *  </dd>
+     *  <dt>
+     *    false 
+     *  </dt>
+     *  <dd>
+     *      Ignore this property
+     *  </dd>
+     * </ul>
+     * 
+     * @return array
+     */
+    protected function getInstPropertyMappings()
+    {
+        return[];
+    }
+
+    protected function setInstProperty($inst, $propertyName, $mappingDefinition, $propertyValue)
+    {
+        if ($mappingDefinition === false) {
+            return false; // Do not even attempt to set this property
+        }
+        if (func_num_args() <= 3) {
+            $propertyValue = $this->$propertyName;
+        }
+        if ($mappingDefinition === true ||
+                is_string($mappingDefinition)) {
+            $instPropertyName = $mappingDefinition === true ? $propertyName : $mappingDefinition;
+            if (property_exists($inst, $propertyName)) {
+                $inst->$instPropertyName = $propertyValue;
+                return;
+            } else {
+                $instSetterMethod = 'set' . ucfirst($instPropertyName);
+                if (method_exists($inst, $instSetterMethod)) {
+                    $inst->$instSetterMethod($propertyValue);
+                    return;
+                } else {
+                    $setInstPropertyMethod = 'setInstProperty' . ucfirst($instPropertyName);
+                    if (method_exists($this, $setInstPropertyMethod)) {
+                        $this->$setInstPropertyMethod($propertyValue, $inst);
+                        return;
+                    }
+                }
+            }
+        } elseif (is_array($mappingDefinition)) {
+            if (reset($mappingDefinition) === null) {
+                $mappingDefinition[0] = $inst;
+                call_user_func_array($mappingDefinition, [$propertyValue]);
+                return;
+            } elseif (reset($mappingDefinition) === $this) {
+                call_user_func_array($mappingDefinition, [$propertyValue, $inst]);
+                return;
+            }
+        }
+        throw new \yii\base\ErrorException('Could not set property ' . $propertyName . ' in wrapped object');
+    }
+
+    /**
+     * @param object $inst
+     */
+    protected function setInstProperites($inst, $mappings)
+    {
+        foreach ($mappings as $cpn => $mapping) {
+            $this->setInstProperty($inst, $cpn, $mapping, $this->$cpn);
+        }
+        foreach ($this->addInstProperties as $p => $v) {
+            $this->setInstProperty($inst, $p, true, $v);
+        }
+    }
 
     /**
      * Creates the wrapped instance
@@ -85,6 +190,7 @@ Abstract class AbstractInstanceWrapperComponent extends \yii\base\Component
     {
         $this->_inst = $this->createNewInst();
         $this->afterNewInst();
+        $this->setInstProperites($this->_inst, $this->getInstPropertyMappings());
     }
 
     /**

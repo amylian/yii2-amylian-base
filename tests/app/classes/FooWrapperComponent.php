@@ -35,17 +35,41 @@
 namespace abexto\amylian\yii\base\tests\app\classes;
 
 /**
- * Description of WrappedTestInst
+ * Description of TestInstanceWrapperComponent
  *
  * @author Andreas Prucha, Abexto - Helicon Software Development
+ * 
+ * @property BarClass $inst
  */
-class WrappedTestInst
+class FooWrapperComponent extends \abexto\amylian\yii\base\common\AbstractInstanceWrapperComponent
 {
-    
-    public $testAfterNewInstEventValue = null;
-    
-    public function getFoo()
+
+    public $value1 = 1;
+    public $value2 = 2;
+    public $value3 = 3;
+    public $value4 = 4;
+    public $value5 = 5;
+
+    protected function getInstPropertyMappings()
     {
-        return 'foo';
+        array_merge(parent::getInstPropertyMappings(),
+                     [
+            'value1' => true,
+            'value2' => true,
+            'value3' => true,
+            'value4' => [null, 'customInstSetValue4'],
+            'value5' => [$this, 'customComponentSetValue5']
+        ]);
     }
+
+    protected function setInstPropertyValue3($value, BarClass $inst)
+    {
+        $inst->customInstSetValue3($value);
+    }
+
+    protected function customComponentSetValue5($value, BarClass $inst)
+    {
+        $inst->customInstSetValue5($value);
+    }
+
 }

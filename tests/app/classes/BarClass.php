@@ -35,11 +35,63 @@
 namespace abexto\amylian\yii\base\tests\app\classes;
 
 /**
- * Description of TestInstanceWrapperComponent
+ * Description of WrappedTestInst
  *
  * @author Andreas Prucha, Abexto - Helicon Software Development
  */
-class TestInstanceWrapperComponent extends \abexto\amylian\yii\base\common\AbstractInstanceWrapperComponent
+class BarClass
 {
+
+    public $value1   = null;
+    private $_value2 = null;
+    private $_value3 = null;
+    private $_value4 = null;
+    private $_value5 = null;
+
+    public function setValue2($value)
+    {
+        $this->value2 = $value;
+    }
     
+    public function customInstSetValue3($value)
+    {
+        $this->_value3 = $value;
+    }
+    
+    public function customInstSetValue4($value)
+    {
+        $this->_value4 = $value;
+    }
+    
+    public function customInstSetValue5($value)
+    {
+        $this->_value5 = $value;
+    }
+    
+    function getValue1()
+    {
+        return $this->value1;
+    }
+
+    function getValue2()
+    {
+        return $this->_value2;
+    }
+
+    function getValue3()
+    {
+        return $this->_value3;
+    }
+
+    function getValue4()
+    {
+        return $this->_value4;
+    }
+
+    function getValue5()
+    {
+        return $this->_value5;
+    }
+
+
 }
