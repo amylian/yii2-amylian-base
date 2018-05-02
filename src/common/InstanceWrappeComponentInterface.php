@@ -38,14 +38,24 @@ namespace abexto\amylian\yii\base\common;
  * Instance Wrapper Interface
  *
  * @author Andreas Prucha, Abexto - Helicon Software Development
+ * 
+ * @property null|object $inst
  */
 interface InstanceWrappeComponentInterface extends \yii\base\Configurable
 {
-     /**
+
+    /**
      * Returns the wrapped object instance
      * 
      * @return object Wrapped object
      * 
      */
     public function getInst();
+
+    /**
+     * Checkes if the wrapped instance has been created
+     * 
+     * @return bool 
+     */
+    public function hasInst();
 }

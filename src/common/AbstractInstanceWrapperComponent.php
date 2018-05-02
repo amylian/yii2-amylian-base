@@ -206,5 +206,10 @@ Abstract class AbstractInstanceWrapperComponent extends \yii\base\Component
         }
         return $this->_inst;
     }
+    
+    public function hasInst()
+    {
+        return $this->_inst !== null;
+    }
 
 }
