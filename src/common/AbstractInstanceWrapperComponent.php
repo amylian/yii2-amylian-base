@@ -125,7 +125,7 @@ Abstract class AbstractInstanceWrapperComponent extends \yii\base\Component
         if ($mappingDefinition === true ||
                 is_string($mappingDefinition)) {
             $instPropertyName = $mappingDefinition === true ? $propertyName : $mappingDefinition;
-            if (property_exists($inst, $propertyName)) {
+            if (property_exists($inst, $instPropertyName)) {
                 $inst->$instPropertyName = $propertyValue;
                 return;
             } else {
