@@ -17,7 +17,7 @@
     }
   ],
   "require": {
-    "yiisoft/yii2": "2.*@stable"
+    "yiisoft/yii2": "^2.0.13@stable"
   },
   "require-dev": {
     "amylian/yii2-amylian-phpunit": "*"
