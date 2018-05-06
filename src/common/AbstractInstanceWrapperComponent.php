@@ -158,6 +158,7 @@ Abstract class AbstractInstanceWrapperComponent extends \yii\base\Component
                     return;
                 } else {
                     $inst->$instPropertyName = $propertyValue;
+                    return;
                 }
             }
         } elseif (is_array($mappingDefinition)) {
