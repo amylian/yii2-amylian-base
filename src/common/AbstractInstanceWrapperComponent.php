@@ -114,6 +114,27 @@ Abstract class AbstractInstanceWrapperComponent extends \yii\base\Component
         return[];
     }
 
+    /**
+     * Sets the value of a property
+     * 
+     * Automatic mapping
+     * 
+     * Automatic mapping is used, if $mappingDefinition is true or contains a property name. 
+     * In this case, the following steps are performed:
+     * 
+     * 1)   Check if a method named setInstPropertyXxxx exists in $this. If the method exists, it is called and the called
+     *      method is responsible to set the property in $inst. 
+     * 2)   Check if a method name setXxxx exists in $inst. If this method exists, it is called. The property value
+     *      is passed in the first parameter. 
+     * 3)   $inst->Xxxx is set directly. 
+     * 
+     * @param type $inst
+     * @param type $propertyName
+     * @param type $mappingDefinition
+     * @param type $propertyValue
+     * @return boolean
+     * @throws \yii\base\ErrorException
+     */
     protected function setInstProperty($inst, $propertyName, $mappingDefinition, $propertyValue = null)
     {
         if ($mappingDefinition === false) {
@@ -125,8 +146,10 @@ Abstract class AbstractInstanceWrapperComponent extends \yii\base\Component
         if ($mappingDefinition === true ||
                 is_string($mappingDefinition)) {
             $instPropertyName = $mappingDefinition === true ? $propertyName : $mappingDefinition;
-            if (property_exists($inst, $instPropertyName)) {
-                $inst->$instPropertyName = $propertyValue;
+
+            $setInstPropertyMethod = 'setInstProperty' . ucfirst($instPropertyName);
+            if (method_exists($this, $setInstPropertyMethod)) {
+                $this->$setInstPropertyMethod($propertyValue, $inst);
                 return;
             } else {
                 $instSetterMethod = 'set' . ucfirst($instPropertyName);
@@ -134,11 +157,7 @@ Abstract class AbstractInstanceWrapperComponent extends \yii\base\Component
                     $inst->$instSetterMethod($propertyValue);
                     return;
                 } else {
-                    $setInstPropertyMethod = 'setInstProperty' . ucfirst($instPropertyName);
-                    if (method_exists($this, $setInstPropertyMethod)) {
-                        $this->$setInstPropertyMethod($propertyValue, $inst);
-                        return;
-                    }
+                    $inst->$instPropertyName = $propertyValue;
                 }
             }
         } elseif (is_array($mappingDefinition)) {
@@ -206,7 +225,7 @@ Abstract class AbstractInstanceWrapperComponent extends \yii\base\Component
         }
         return $this->_inst;
     }
-    
+
     public function hasInst()
     {
         return $this->_inst !== null;
