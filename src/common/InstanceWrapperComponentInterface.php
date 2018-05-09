@@ -32,7 +32,7 @@
  * 
  */
 
-namespace abexto\amylian\yii\base\common;
+namespace amylian\yii\base\common;
 
 /**
  * Instance Wrapper Interface

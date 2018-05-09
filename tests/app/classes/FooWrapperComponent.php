@@ -32,7 +32,7 @@
  * 
  */
 
-namespace abexto\amylian\yii\base\tests\app\classes;
+namespace amylian\yii\base\tests\app\classes;
 
 /**
  * Description of TestInstanceWrapperComponent
@@ -41,7 +41,7 @@ namespace abexto\amylian\yii\base\tests\app\classes;
  * 
  * @property BarClass $inst
  */
-class FooWrapperComponent extends \abexto\amylian\yii\base\common\BasetInstanceWrapperComponent
+class FooWrapperComponent extends \amylian\yii\base\common\BasetInstanceWrapperComponent
 {
 
     public $value1 = 1;

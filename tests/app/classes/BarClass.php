@@ -32,7 +32,7 @@
  * 
  */
 
-namespace abexto\amylian\yii\base\tests\app\classes;
+namespace amylian\yii\base\tests\app\classes;
 
 /**
  * Description of WrappedTestInst
