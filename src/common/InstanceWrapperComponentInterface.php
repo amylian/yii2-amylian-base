@@ -41,7 +41,7 @@ namespace abexto\amylian\yii\base\common;
  * 
  * @property null|object $inst
  */
-interface InstanceWrappeComponentInterface extends \yii\base\Configurable
+interface InstanceWrapperComponentInterface extends \yii\base\Configurable
 {
 
     /**

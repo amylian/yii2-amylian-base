@@ -41,7 +41,7 @@ namespace abexto\amylian\yii\base\common;
  * 
  * @property object $inst Wrapped Object Instance ({@see getInst()})
  */
-Abstract class AbstractInstanceWrapperComponent extends \yii\base\Component
+Abstract class BasetInstanceWrapperComponent extends \yii\base\Component implements InstanceWrapperComponentInterface
 {
 
     const EVENT_AFTER_NEW_INST = 'afterNewInst';
@@ -68,6 +68,7 @@ Abstract class AbstractInstanceWrapperComponent extends \yii\base\Component
      * @var object|null Wrapped object instance
      */
     protected $_inst = null;
+    protected $_instInitFinalized = false;
 
     /**
      *  Array of additional properties to set in the wrapped instance
@@ -200,6 +201,17 @@ Abstract class AbstractInstanceWrapperComponent extends \yii\base\Component
             return $classReflection->newInstanceArgs($this->concstructorArgs);
         }
     }
+    
+    /**
+     * Destroys the object
+     * 
+     * @param object $inst Instance to destroy
+     */
+    protected function destroyInst($inst)
+    {
+        unset($this->$inst);
+        $this->_instInitFinalized = false;
+    }
 
     protected function afterNewInst()
     {
@@ -208,9 +220,11 @@ Abstract class AbstractInstanceWrapperComponent extends \yii\base\Component
 
     protected function doCreateNewInst()
     {
-        $this->_inst = $this->createNewInst();
+        $this->_instInitFinalized = false;
+        $this->_inst              = $this->createNewInst();
         $this->afterNewInst();
         $this->setInstProperites($this->_inst, $this->getInstPropertyMappings());
+        $this->_instInitFinalized = true;
     }
 
     /**
@@ -227,9 +241,9 @@ Abstract class AbstractInstanceWrapperComponent extends \yii\base\Component
         return $this->_inst;
     }
 
-    public function hasInst()
+    public function hasInst($allowUnfinalizedInst = false)
     {
-        return $this->_inst !== null;
+        return $this->_inst !== null && ($allowUnfinalizedInst || $this->_instInitFinalized);
     }
 
 }

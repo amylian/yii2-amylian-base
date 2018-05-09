@@ -41,7 +41,7 @@ namespace abexto\amylian\yii\base\tests\app\classes;
  * 
  * @property BarClass $inst
  */
-class FooWrapperComponent extends \abexto\amylian\yii\base\common\AbstractInstanceWrapperComponent
+class FooWrapperComponent extends \abexto\amylian\yii\base\common\BasetInstanceWrapperComponent
 {
 
     public $value1 = 1;
