@@ -41,7 +41,7 @@ namespace amylian\yii\base\common;
  * 
  * @property object $inst Wrapped Object Instance ({@see getInst()})
  */
-Abstract class BasetInstanceWrapperComponent extends \yii\base\Component implements InstanceWrapperComponentInterface
+Abstract class BaseInstanceWrapperComponent extends \yii\base\Component implements InstanceWrapperComponentInterface
 {
 
     const EVENT_AFTER_NEW_INST = 'afterNewInst';
